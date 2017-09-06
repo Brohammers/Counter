@@ -4,17 +4,82 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:padding="16dp"
     >
-
+<!-- SOURCE FOR ICONS: https://www.flaticon.com/packs/material-design/5 -->
     <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
         android:id="@+id/counterCard"
-        >
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/increment"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/currentDateStamp"
+                android:gravity="center"
+                android:padding="16dp"
+                android:textSize="24sp"
+                tools:text="500" />
+
+
+            <ImageButton
+                android:id="@+id/increment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/decrement"
+                android:src="@android:drawable/arrow_up_float" />
+
+            <ImageButton
+                android:id="@+id/decrement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:src="@android:drawable/arrow_down_float" />
+
+            <TextView
+                android:id="@+id/Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="12sp"
+                tools:text="Name of counter"
+                android:layout_alignBaseline="@+id/currentDateStamp"
+                android:layout_alignBottom="@+id/currentDateStamp"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/currentDateStamp" />
+
+            <TextView
+                android:id="@+id/currentDateStamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/increment"
+                android:layout_toEndOf="@+id/increment"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="12sp"
+                tools:text="2017-05-12" />
+
+            <TextView
+                android:id="@+id/Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="8dp"
+                android:textSize="12sp"
+                tools:text="This is the description of the counter. "
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/increment"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/count" />
 
         </RelativeLayout>
 
