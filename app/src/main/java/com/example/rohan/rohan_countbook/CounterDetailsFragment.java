@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,23 +28,26 @@ import java.util.List;
 public class CounterDetailsFragment extends Fragment {
 
     private int mIndex;
+    private boolean mIsNew;
 
     private EditText mName;
     private EditText mInitialValue;
     private EditText mCurrentValue;
     private EditText mDescription;
     private TextView mDate;
+
     private Button mResetCounter;
     private Button mSave;
 
+
+
     private Counter mCounter;
 
-    OnCounterSavedListener mCallback;
+    OnCounterModifiedListener mCallback;
 
-    public interface OnCounterSavedListener {
+    public interface OnCounterModifiedListener {
 
-        void onCounterSaved();
-        void onDelete();
+        void onCounterModified();
 
     }
 
@@ -51,7 +55,7 @@ public class CounterDetailsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallback = (OnCounterSavedListener) activity;
+            mCallback = (OnCounterModifiedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement interface");
@@ -71,8 +75,16 @@ public class CounterDetailsFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.deleteCounter:
-                Toast.makeText(getActivity(), "to implement delete", Toast.LENGTH_SHORT).show();
-                return true;
+                if (!mIsNew) {
+
+                    ((MainActivity) getActivity()).mCounters.remove(mIndex);
+                    mCallback.onCounterModified();
+                    Toast.makeText(getActivity(), "Counter deleted!", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getActivity(), "You are currently in the create new counter form!", Toast.LENGTH_SHORT).show();
+                }
+
             default:
                 // default behaviour calls superclass
                 return super.onOptionsItemSelected(item);
@@ -102,6 +114,7 @@ public class CounterDetailsFragment extends Fragment {
         mCurrentValue = (EditText) v.findViewById(R.id.editTextCurrentValue);
         mDescription = (EditText) v.findViewById(R.id.editTextDescription);
         mDate = (TextView) v.findViewById(R.id.edit_date);
+
         mResetCounter = (Button) v.findViewById(R.id.resetCounter);
         mSave = (Button) v.findViewById(R.id.Save);
 
@@ -116,6 +129,8 @@ public class CounterDetailsFragment extends Fragment {
     }
 
     private void initExistingCounter(View v) {
+        mIsNew = false;
+
         mCounter = ((MainActivity) getActivity()).mCounters.get(mIndex);
         mName.setText(mCounter.getName());
         mInitialValue.setText(Integer.toString(mCounter.getInitialValue()));
@@ -146,7 +161,9 @@ public class CounterDetailsFragment extends Fragment {
                 ((MainActivity) getActivity()).mCounters.get(mIndex).setName(mName.getText().toString());
                 ((MainActivity) getActivity()).mCounters.get(mIndex).setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
                 ((MainActivity) getActivity()).mCounters.get(mIndex).setComment(mDescription.getText().toString());
-                mCallback.onCounterSaved();
+
+                Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
+                mCallback.onCounterModified();
             }
         });
 
@@ -154,6 +171,8 @@ public class CounterDetailsFragment extends Fragment {
     }
 
     private void initNewCounter(View v) {
+        mIsNew = true;
+
         mInitialValue.setEnabled(true);
 
 
@@ -183,7 +202,7 @@ public class CounterDetailsFragment extends Fragment {
 
                 Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
 
-                mCallback.onCounterSaved();
+                mCallback.onCounterModified();
 
             }
         });

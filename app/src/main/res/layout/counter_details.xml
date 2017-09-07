@@ -33,25 +33,6 @@
         tools:text="50"/>
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <ImageButton
-            android:id="@+id/edit_incrementCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/up_arrow"/>
-
-        <ImageButton
-            android:id="@+id/edit_decrementCounter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:src="@drawable/down_arrow"/>
-    </LinearLayout>
-
-
     <EditText
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"

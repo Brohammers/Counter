@@ -1,19 +1,26 @@
 package com.example.rohan.rohan_countbook;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CounterListFragment.OnCounterCardSelectedListener,
-        CounterListFragment.OnAddSelectedListener, CounterDetailsFragment.OnCounterSavedListener {
+        CounterListFragment.OnAddSelectedListener, CounterDetailsFragment.OnCounterModifiedListener {
 
     public List<Counter> mCounters = new ArrayList<Counter>();
 
@@ -21,7 +28,9 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        testData();
+
+        //testData();
+        loadExistingData();
 
         initializeCounterList();
 
@@ -67,6 +76,31 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
         mCounters.add(c11);
 
     }
+
+    private void loadExistingData() {
+        SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        Gson gson = new Gson();
+        String JSONArrayCounters = counterData.getString("Saved Data", "");
+
+
+        if (!JSONArrayCounters.equals("")) {
+            mCounters = gson.fromJson(JSONArrayCounters,new TypeToken<List<Counter>>(){}.getType());
+        } else {
+            mCounters = new ArrayList<Counter>();
+        }
+    }
+
+
+    private void saveData() {
+        SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext());
+        Gson gson = new Gson();
+        String jsonCounters = gson.toJson(mCounters);
+
+        SharedPreferences.Editor prefsEditor = counterData.edit();
+        prefsEditor.putString("Saved Data", jsonCounters);
+        prefsEditor.commit();
+    }
+
     @Override
     //IMPLEMENT SHOWING DETAILS VIEW, to edit exiting items
     public void onCounterSelected(int index) {
@@ -78,7 +112,13 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
     }
 
     @Override
-    public void onCounterSaved() {
+    public void onIncrementDecrementSelected() {
+        saveData();
+    }
+
+    @Override
+    public void onCounterModified() {
+        saveData();
         initializeCounterList();
     }
 

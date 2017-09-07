@@ -35,6 +35,7 @@ public class CounterListFragment extends Fragment {
     public interface OnCounterCardSelectedListener {
 
         void onCounterSelected(int index);
+        void onIncrementDecrementSelected();
 
     }
 
@@ -147,6 +148,8 @@ public class CounterListFragment extends Fragment {
 
                     updateUI(INDEX);
 
+                    mCallback.onIncrementDecrementSelected();
+
                     //Increment counter
 
                 }
@@ -159,6 +162,8 @@ public class CounterListFragment extends Fragment {
                     counter.setCurrentValue(counter.getCurrentValue() - 1);
 
                     updateUI(INDEX);
+
+                    mCallback.onIncrementDecrementSelected();
                     //Decrement counter
 
                 }
@@ -177,8 +182,6 @@ public class CounterListFragment extends Fragment {
 
         private void updateUI (int index) {
             mCounterAdapter.notifyItemChanged(index);
-
-
         }
 
 
