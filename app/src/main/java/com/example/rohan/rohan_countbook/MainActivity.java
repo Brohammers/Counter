@@ -9,29 +9,48 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements CounterListFragment.OnCounterCardSelectedListener {
+
+    public List<Counter> mCounters;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        testData();
+
         initializeCounterList();
 
         Toolbar t = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(t);
+
     }
 
     private void initializeCounterList() {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        ft.add(R.id.frameLayout, new CounterListFragment());
+        ft.replace(R.id.frameLayout, new CounterListFragment());
+        ft.addToBackStack(null);
         ft.commit();
     }
 
+
+    private void testData() {
+        mCounters =  new ArrayList<Counter>();
+        Counter c1 = new Counter("Buy Eggs", "List of eggs to buy", 10);
+        mCounters.add(c1);
+    }
     @Override
-    //IMPLEMENT SHOWING DETAILS VIEW
+    //IMPLEMENT SHOWING DETAILS VIEW, to edit exiting items
     public void onCounterSelected(int index) {
-        Toast.makeText(this, "Hello", Toast.LENGTH_SHORT).show();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frameLayout, CounterDetailsFragment.newInstance(index));
+        ft.addToBackStack(null);
+        ft.commit();
     }
 
     @Override
@@ -46,13 +65,12 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
 
         switch (item.getItemId()) {
             case R.id.addCounter:
-                // User chose the "Settings" item, show the app settings UI...
+                // Add a new counter
                 return true;
 
 
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
+                // default behaviour calls superclass
                 return super.onOptionsItemSelected(item);
 
         }

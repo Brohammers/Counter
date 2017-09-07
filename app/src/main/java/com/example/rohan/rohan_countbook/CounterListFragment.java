@@ -36,6 +36,9 @@ public class CounterListFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private CounterAdapter mCounterAdapter;
+    private List<Counter> c;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -45,9 +48,7 @@ public class CounterListFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        List<Counter> c =  new ArrayList<Counter>();
-        Counter c1 = new Counter("Buy Eggs", "List of eggs to buy", 10);
-        c.add(c1);
+        c = ((MainActivity) getActivity()).mCounters;
 
         mCounterAdapter = new CounterAdapter(c);
         mRecyclerView.setAdapter(mCounterAdapter);
