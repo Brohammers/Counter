@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="16dp">
 
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/name" />
+        android:hint="@string/name"/>
 
 
     <EditText
@@ -21,7 +21,7 @@
         android:hint="@string/initial_value"
         android:inputType="number"
         android:textSize="24sp"
-        tools:text="52" />
+        tools:text="52"/>
 
     <EditText
         android:id="@+id/editTextCurrentValue"
@@ -30,7 +30,7 @@
         android:enabled="false"
         android:inputType="number"
         android:textSize="24sp"
-        tools:text="50" />
+        tools:text="50"/>
 
 
     <LinearLayout
@@ -41,14 +41,14 @@
             android:id="@+id/edit_incrementCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/up_arrow" />
+            android:src="@drawable/up_arrow"/>
 
         <ImageButton
             android:id="@+id/edit_decrementCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:src="@drawable/down_arrow" />
+            android:src="@drawable/down_arrow"/>
     </LinearLayout>
 
 
@@ -56,28 +56,33 @@
         android:id="@+id/editTextDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/description" />
+        android:hint="@string/description"/>
 
     <TextView
+        android:id="@+id/edit_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edit_date"
         tools:text="2017-01-25"/>
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <Button
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="@string/reset_counter"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="@string/save"/>
-</LinearLayout>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/resetCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/reset_counter"/>
+
+        <Button
+            android:id="@+id/Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="@string/save"/>
+    </LinearLayout>
 
 
 </LinearLayout>

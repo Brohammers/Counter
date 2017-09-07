@@ -12,9 +12,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CounterListFragment.OnCounterCardSelectedListener {
+public class MainActivity extends AppCompatActivity implements CounterListFragment.OnCounterCardSelectedListener,
+        CounterListFragment.OnAddSelectedListener, CounterDetailsFragment.OnCounterSavedListener {
 
-    public List<Counter> mCounters;
+    public List<Counter> mCounters = new ArrayList<Counter>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,31 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
 
     private void testData() {
         mCounters =  new ArrayList<Counter>();
+
         Counter c1 = new Counter("Buy Eggs", "List of eggs to buy", 10);
+        Counter c2 = new Counter("Buy Eggs", "List of eggs to buy", 11);
+        Counter c3 = new Counter("Buy Eggs", "List of eggs to buy", 12);
+        Counter c4 = new Counter("Buy Eggs", "List of eggs to buy", 13);
+        Counter c5 = new Counter("Buy Eggs", "List of eggs to buy", 14);
+        Counter c6 = new Counter("Buy Eggs", "List of eggs to buy", 15);
+        Counter c7 = new Counter("Buy Eggs", "List of eggs to buy", 17);
+        Counter c8 = new Counter("Buy Eggs", "List of eggs to buy", 112);
+        Counter c9 = new Counter("Buy Eggs", "List of eggs to buy", 11);
+        Counter c10 = new Counter("Buy Eggs", "List of eggs to buy", 10);
+        Counter c11 = new Counter("Buy Eggs", "List of eggs to buy", 9);
+
         mCounters.add(c1);
+        mCounters.add(c2);
+        mCounters.add(c3);
+        mCounters.add(c4);
+        mCounters.add(c5);
+        mCounters.add(c6);
+        mCounters.add(c7);
+        mCounters.add(c8);
+        mCounters.add(c9);
+        mCounters.add(c10);
+        mCounters.add(c11);
+
     }
     @Override
     //IMPLEMENT SHOWING DETAILS VIEW, to edit exiting items
@@ -54,26 +78,16 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onCounterSaved() {
+        initializeCounterList();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.addCounter:
-                // Add a new counter
-                return true;
-
-
-            default:
-                // default behaviour calls superclass
-                return super.onOptionsItemSelected(item);
-
-        }
-
+    public void onAddSelected() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.frameLayout, new CounterDetailsFragment());
+        ft.addToBackStack(null);
+        ft.commit();
     }
 }

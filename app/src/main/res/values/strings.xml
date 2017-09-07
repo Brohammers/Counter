@@ -6,4 +6,5 @@
     <string name="initial_value">Initial Value</string>
     <string name="reset_counter">Reset counter</string>
     <string name="save">Save</string>
+    <string name="delete">Delete</string>
 </resources>

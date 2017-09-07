@@ -9,10 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -26,11 +30,16 @@ import java.util.List;
 public class CounterListFragment extends Fragment {
 
     OnCounterCardSelectedListener mCallback;
+    OnAddSelectedListener mAddCallback;
 
     public interface OnCounterCardSelectedListener {
 
         void onCounterSelected(int index);
 
+    }
+
+    public interface OnAddSelectedListener {
+        void onAddSelected();
     }
 
 
@@ -44,6 +53,7 @@ public class CounterListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.counter_list, container, false);
+        setHasOptionsMenu(true);
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -61,14 +71,39 @@ public class CounterListFragment extends Fragment {
         return v;
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_main, menu);
+        super.onCreateOptionsMenu(menu, menuInflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.addCounter:
+                mAddCallback.onAddSelected();
+                return true;
+
+            default:
+                // default behaviour calls superclass
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
             mCallback = (OnCounterCardSelectedListener) activity;
+            mAddCallback = (OnAddSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement interface");
+                    + " must implement interface(s)!");
         }
     }
 
