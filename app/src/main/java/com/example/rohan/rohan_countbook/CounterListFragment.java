@@ -63,7 +63,6 @@ public class CounterListFragment extends Fragment {
         mCounterSummary = (TextView) v.findViewById(R.id.numberOfCounters);
         mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
 
-
         return v;
     }
 
@@ -186,7 +185,6 @@ public class CounterListFragment extends Fragment {
                 this.mCurrentValue = (TextView) view.findViewById(R.id.currentValue);
                 this.mDate = (TextView) view.findViewById(R.id.currentDateStamp);
                 this.mDescription = (TextView) view.findViewById(R.id.Description);
-
                 this.mIncrement = (ImageButton) view.findViewById(R.id.incrementCounter);
                 this.mDecrement = (ImageButton) view.findViewById(R.id.decrementCounter);
             }
