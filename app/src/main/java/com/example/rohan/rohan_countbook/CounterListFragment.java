@@ -3,11 +3,8 @@ package com.example.rohan.rohan_countbook;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.LayoutInflaterCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,11 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,25 +22,22 @@ import java.util.List;
 
 public class CounterListFragment extends Fragment {
 
-    OnCounterCardSelectedListener mCallback;
-    OnAddSelectedListener mAddCallback;
+    OnSelectedListener mCallback;
 
-    public interface OnCounterCardSelectedListener {
+    public interface OnSelectedListener {
 
         void onCounterSelected(int index);
-        void onIncrementDecrementSelected();
-
-    }
-
-    public interface OnAddSelectedListener {
         void onAddSelected();
-    }
 
+    }
 
     private RecyclerView mRecyclerView;
     private CounterAdapter mCounterAdapter;
-    private List<Counter> c;
+    private CounterStorage mCounterStorage;
 
+    public static CounterListFragment newInstance() {
+        return new CounterListFragment();
+    }
 
 
     @Override
@@ -59,15 +49,10 @@ public class CounterListFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        c = ((MainActivity) getActivity()).mCounters;
+        mCounterStorage = CounterStorage.getCounterStorage(getActivity());
 
-        mCounterAdapter = new CounterAdapter(c);
+        mCounterAdapter = new CounterAdapter(mCounterStorage);
         mRecyclerView.setAdapter(mCounterAdapter);
-
-
-
-        //do all your view setup here
-
 
         return v;
     }
@@ -85,23 +70,20 @@ public class CounterListFragment extends Fragment {
 
         switch (item.getItemId()) {
             case R.id.addCounter:
-                mAddCallback.onAddSelected();
+                mCallback.onAddSelected();
                 return true;
 
             default:
                 // default behaviour calls superclass
                 return super.onOptionsItemSelected(item);
-
         }
-
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallback = (OnCounterCardSelectedListener) activity;
-            mAddCallback = (OnAddSelectedListener) activity;
+            mCallback = (OnSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement interface(s)!");
@@ -112,10 +94,10 @@ public class CounterListFragment extends Fragment {
 
     public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterHolder> {
 
-        private List<Counter> mCounterList;
+        private CounterStorage mCounterStorage;
 
-        public CounterAdapter(List<Counter> counterList) {
-            this.mCounterList = counterList;
+        public CounterAdapter(CounterStorage counterStorage) {
+            this.mCounterStorage = counterStorage;
         }
 
         @Override
@@ -128,10 +110,8 @@ public class CounterListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CounterHolder counterHolder, int index) {
-            final Counter counter = mCounterList.get(index);
+            final Counter counter = mCounterStorage.getCounters().get(index);
             final int INDEX = index;
-
-
 
             counterHolder.mName.setText(counter.getName());
             Integer i = counter.getCurrentValue();
@@ -139,45 +119,30 @@ public class CounterListFragment extends Fragment {
             counterHolder.mDate.setText(counter.getLastModifiedDate());
             counterHolder.mDescription.setText(counter.getComment());
 
-
             counterHolder.mIncrement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     counter.setCurrentValue(counter.getCurrentValue() + 1);
-
                     updateUI(INDEX);
-
-                    mCallback.onIncrementDecrementSelected();
-
-                    //Increment counter
-
+                    mCounterStorage.saveCounters();
                 }
             });
 
             counterHolder.mDecrement.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     counter.setCurrentValue(counter.getCurrentValue() - 1);
-
                     updateUI(INDEX);
-
-                    mCallback.onIncrementDecrementSelected();
-                    //Decrement counter
-
+                    mCounterStorage.saveCounters();
                 }
             });
 
             counterHolder.mDescription.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     mCallback.onCounterSelected(INDEX);
-
                 }
             });
-
         }
 
         private void updateUI (int index) {
@@ -188,7 +153,7 @@ public class CounterListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mCounterList.size();
+            return mCounterStorage.getCounters().size();
         }
 
 
