@@ -17,32 +17,32 @@ import java.util.List;
 public class CounterStorage {
 
     private List<Counter> mCounters;
-    private Context mContext;
     private static final String SAVED_DATA_KEY = "com.example.rohan.rohan_book.CounterStorage";
-
     private static CounterStorage mCounterStorage = null;
-
-    public static CounterStorage getCounterStorage(Context context) {
+    public static CounterStorage getCounterStorage() {
 
         if (mCounterStorage == null) {
-            mCounterStorage = new CounterStorage(context);
+            mCounterStorage = new CounterStorage();
             return mCounterStorage;
         }
         return mCounterStorage;
 
     }
 
-    private CounterStorage(Context context) {
-        mContext = context.getApplicationContext();
-        retrieveCounters();
+    private CounterStorage() {
+       initCounters();
     }
 
     public List<Counter> getCounters() {
         return mCounters;
     }
 
-    public void retrieveCounters() {
-        SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+    public void initCounters() {
+        mCounters = new ArrayList<Counter>();
+    }
+
+    public void retrieveCounters(Context context) {
+        SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         Gson gson = new Gson();
         String JSONArrayCounters = counterData.getString(SAVED_DATA_KEY, "");
 
@@ -54,9 +54,9 @@ public class CounterStorage {
         }
     }
 
-    public void saveCounters() {
+    public void saveCounters(Context context) {
 
-        SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(this.mContext);
+        SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         Gson gson = new Gson();
         String jsonCounters = gson.toJson(mCounters);
 
@@ -64,7 +64,7 @@ public class CounterStorage {
         prefsEditor.putString(SAVED_DATA_KEY, jsonCounters);
         prefsEditor.commit();
 
-        retrieveCounters();
+        retrieveCounters(context);
 
     }
 

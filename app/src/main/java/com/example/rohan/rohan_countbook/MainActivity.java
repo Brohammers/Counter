@@ -27,8 +27,13 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeCounterList();
+        CounterStorage.getCounterStorage().retrieveCounters(this);
 
+        setToolbar();
+        initializeCounterList();
+    }
+
+    private void setToolbar() {
         Toolbar t = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(t);
     }

@@ -77,7 +77,7 @@ public class CounterDetailsFragment extends Fragment {
             case R.id.deleteCounter:
                 if (!mIsNew) {
                     mCounterStorage.getCounters().remove(mIndex);
-                    mCounterStorage.saveCounters();
+                    mCounterStorage.saveCounters(getActivity());
                     mCallback.onCounterModified();
                     Toast.makeText(getActivity(), "Counter deleted!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -116,7 +116,7 @@ public class CounterDetailsFragment extends Fragment {
         mResetCounter = (Button) v.findViewById(R.id.resetCounter);
         mSave = (Button) v.findViewById(R.id.Save);
 
-        mCounterStorage = CounterStorage.getCounterStorage(getActivity());
+        mCounterStorage = CounterStorage.getCounterStorage();
         if (getArguments() != null && getArguments().getBoolean(IS_VALID_KEY)) {
             mIndex = getArguments().getInt(INDEX_KEY);
             initExistingCounter(v);
@@ -160,7 +160,7 @@ public class CounterDetailsFragment extends Fragment {
                 mCounterStorage.getCounters().get(mIndex).setName(mName.getText().toString());
                 mCounterStorage.getCounters().get(mIndex).setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
                 mCounterStorage.getCounters().get(mIndex).setComment(mDescription.getText().toString());
-                mCounterStorage.saveCounters();
+                mCounterStorage.saveCounters(getActivity());
 
                 Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
                 mCallback.onCounterModified();
@@ -197,7 +197,7 @@ public class CounterDetailsFragment extends Fragment {
 
                 Counter newCounter = new Counter(mName.getText().toString(), mDescription.getText().toString(), Integer.valueOf(mInitialValue.getText().toString()));
                 mCounterStorage.getCounters().add(newCounter);
-                mCounterStorage.saveCounters();
+                mCounterStorage.saveCounters(getActivity());
 
                 Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
 

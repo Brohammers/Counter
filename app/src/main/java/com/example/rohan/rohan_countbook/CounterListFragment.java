@@ -31,6 +31,8 @@ public class CounterListFragment extends Fragment {
 
     }
 
+    private TextView mCounterSummary;
+
     private RecyclerView mRecyclerView;
     private CounterAdapter mCounterAdapter;
     private CounterStorage mCounterStorage;
@@ -46,13 +48,21 @@ public class CounterListFragment extends Fragment {
         View v = inflater.inflate(R.layout.counter_list, container, false);
         setHasOptionsMenu(true);
 
+
+        mCounterStorage = CounterStorage.getCounterStorage();
+
+
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        mCounterStorage = CounterStorage.getCounterStorage(getActivity());
 
         mCounterAdapter = new CounterAdapter(mCounterStorage);
         mRecyclerView.setAdapter(mCounterAdapter);
+
+
+        mCounterSummary = (TextView) v.findViewById(R.id.numberOfCounters);
+        mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
+
 
         return v;
     }
@@ -124,7 +134,7 @@ public class CounterListFragment extends Fragment {
                 public void onClick(View view) {
                     counter.setCurrentValue(counter.getCurrentValue() + 1);
                     updateUI(INDEX);
-                    mCounterStorage.saveCounters();
+                    mCounterStorage.saveCounters(getActivity());
                 }
             });
 
@@ -133,7 +143,7 @@ public class CounterListFragment extends Fragment {
                 public void onClick(View view) {
                     counter.setCurrentValue(counter.getCurrentValue() - 1);
                     updateUI(INDEX);
-                    mCounterStorage.saveCounters();
+                    mCounterStorage.saveCounters(getActivity());
                 }
             });
 
@@ -147,6 +157,7 @@ public class CounterListFragment extends Fragment {
 
         private void updateUI (int index) {
             mCounterAdapter.notifyItemChanged(index);
+            mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
         }
 
 
