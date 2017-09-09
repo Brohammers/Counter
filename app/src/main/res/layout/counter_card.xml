@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:padding="4dp"
     >
-<!-- SOURCE FOR ICONS: https://www.flaticon.com/packs/material-design/5 -->
     <android.support.v7.widget.CardView
         android:id="@+id/counterCard"
         android:layout_width="match_parent"
-        android:elevation="@dimen/cardview_default_elevation"
         android:layout_height="120dp"
+        android:elevation="@dimen/cardview_default_elevation"
         app:cardCornerRadius="4dp"
         app:cardElevation="@dimen/cardview_default_elevation">
 
@@ -30,65 +29,62 @@
                 android:gravity="center"
                 android:padding="16dp"
                 android:textSize="24sp"
-                tools:text="500" />
+                tools:text="500"/>
 
-
-            <ImageButton
+            <Button
                 android:id="@+id/incrementCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_toEndOf="@+id/decrementCounter"
-                android:src="@drawable/up_arrow" />
+                android:text="+"
+                android:layout_toEndOf="@+id/decrementCounter"/>
 
-            <ImageButton
+            <Button
                 android:id="@+id/decrementCounter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-
-                android:src="@drawable/down_arrow" />
+                android:text="-"
+                android:layout_below="@+id/currentValue"/>
 
             <TextView
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/incrementCounter"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/currentValue"
                 android:gravity="center"
                 android:padding="16dp"
-                android:textSize="24sp"
-                tools:text="Name of counter"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/currentValue"
-                android:layout_above="@+id/incrementCounter"/>
+                android:textSize="16sp"
+                tools:text="Name of counter"/>
 
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/date_modified"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/currentValue"
+                android:layout_toEndOf="@+id/incrementCounter"
                 android:gravity="center|right"
                 android:padding="8dp"
-                android:textSize="12sp"
-                android:layout_toEndOf="@+id/incrementCounter"
-                android:id="@+id/textView"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/currentValue"/>
+                android:text="@string/date_modified"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/currentDateStamp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@+id/name"
                 android:gravity="center"
                 android:padding="8dp"
                 android:textSize="12sp"
                 tools:text="2017-05-12"
-                android:layout_below="@+id/name"
-                android:layout_toEndOf="@+id/textView"
-                android:layout_alignParentBottom="true"/>
-
+                android:layout_alignParentEnd="true"/>
         </RelativeLayout>
-
 
     </android.support.v7.widget.CardView>
 

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,14 +55,15 @@ public class CounterDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         try {
-            mCallback = (OnCounterModifiedListener) activity;
+            mCallback = (OnCounterModifiedListener) getActivity();
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement interface");
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnCounterModifiedListener");
         }
+
     }
 
     @Override
@@ -119,26 +122,37 @@ public class CounterDetailsFragment extends Fragment {
         mCounterStorage = CounterStorage.getCounterStorage();
         if (getArguments() != null && getArguments().getBoolean(IS_VALID_KEY)) {
             mIndex = getArguments().getInt(INDEX_KEY);
+            mIsNew = false;
             initExistingCounter(v);
         } else {
+            mIsNew = true;
             initNewCounter(v);
         }
+
+        mInitialValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mCurrentValue.setText(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         return v;
     }
 
     private void initExistingCounter(View v) {
-        mIsNew = false;
         mCounter = mCounterStorage.getCounters().get(mIndex);
 
-        mName.setText(mCounter.getName());
-        mInitialValue.setText(Integer.toString(mCounter.getInitialValue()));
-
-        mCurrentValue.setText(Integer.toString(mCounter.getCurrentValue()));
-        mCurrentValue.setEnabled(true);
-
-        mDescription.setText(mCounter.getComment());
-        mDate.setText(mCounter.getLastModifiedDate());
+        loadCounterDetails();
 
         mResetCounter.setEnabled(true);
         mResetCounter.setOnClickListener(new View.OnClickListener() {
@@ -149,64 +163,73 @@ public class CounterDetailsFragment extends Fragment {
             }
         });
 
-        mSave.setEnabled(true);
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (! (mCurrentValue.getText().toString().equals( mCounterStorage.getCounters().get(mIndex).getCurrentValue())) ) {
-                   mCounterStorage.getCounters().get(mIndex).setLastModifiedDate();
+                if (onSaveValidation()) {
+                    mCounterStorage.getCounters().get(mIndex).setName(mName.getText().toString());
+                    mCounterStorage.getCounters().get(mIndex).setInitialValue(Integer.valueOf(mInitialValue.getText().toString()));
+                    mCounterStorage.getCounters().get(mIndex).setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
+                    mCounterStorage.getCounters().get(mIndex).setComment(mDescription.getText().toString());
 
+                    onSaveSuccess();
                 }
-                mCounterStorage.getCounters().get(mIndex).setName(mName.getText().toString());
-                mCounterStorage.getCounters().get(mIndex).setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
-                mCounterStorage.getCounters().get(mIndex).setComment(mDescription.getText().toString());
-                mCounterStorage.saveCounters(getActivity());
-
-                Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
-                mCallback.onCounterModified();
             }
         });
     }
 
+    private void loadCounterDetails() {
+        mName.setText(mCounter.getName());
+        mInitialValue.setText(Integer.toString(mCounter.getInitialValue()));
+        mCurrentValue.setText(Integer.toString(mCounter.getCurrentValue()));
+        mDescription.setText(mCounter.getComment());
+        mDate.setText(mCounter.getLastModifiedDate());
+    }
+
     private void initNewCounter(View v) {
-        mIsNew = true;
+        mDate.setText("Will be set to today's date on save.");
 
-        mInitialValue.setEnabled(true);
-
-
-        mSave.setEnabled(true);
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (  (mName.getText().toString().equals("")) && (mInitialValue.getText().toString().equals("")) ) {
+                if (onSaveValidation()) {
+                    mCounterStorage.getCounters().add(new Counter(
+                            mName.getText().toString(),
+                            mDescription.getText().toString(),
+                            Integer.valueOf(mInitialValue.getText().toString()),
+                            Integer.valueOf(mCurrentValue.getText().toString())
+                    ));
 
-                    Toast.makeText(getActivity(), "Please enter name and initial value for counter", Toast.LENGTH_SHORT).show();
-                    return;
-
-                } else if (mName.getText().toString().equals("")) {
-
-                    Toast.makeText(getActivity(), "Please enter name for counter", Toast.LENGTH_SHORT).show();
-                    return;
-
-                } else if (mInitialValue.getText().toString().equals("")) {
-
-                    Toast.makeText(getActivity(), "Please enter initial value for counter", Toast.LENGTH_SHORT).show();
-                    return;
-
+                    onSaveSuccess();
                 }
-
-                Counter newCounter = new Counter(mName.getText().toString(), mDescription.getText().toString(), Integer.valueOf(mInitialValue.getText().toString()));
-                mCounterStorage.getCounters().add(newCounter);
-                mCounterStorage.saveCounters(getActivity());
-
-                Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
-
-                mCallback.onCounterModified();
-
             }
         });
+    }
 
+    private boolean onSaveValidation() {
+        if (  (mName.getText().toString().equals("")) && (mInitialValue.getText().toString().equals("")) ) {
 
+            Toast.makeText(getActivity(), "Please enter name and initial value for counter", Toast.LENGTH_SHORT).show();
+            return false;
+
+        } else if (mName.getText().toString().equals("")) {
+
+            Toast.makeText(getActivity(), "Please enter name for counter", Toast.LENGTH_SHORT).show();
+            return false;
+
+        } else if (mInitialValue.getText().toString().equals("")) {
+
+            Toast.makeText(getActivity(), "Please enter initial value for counter", Toast.LENGTH_SHORT).show();
+            return false;
+
+        }
+        return true;
+    }
+
+    private void onSaveSuccess() {
+        mCounterStorage.saveCounters(getActivity());
+        Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
+        mCallback.onCounterModified();
     }
 
 }

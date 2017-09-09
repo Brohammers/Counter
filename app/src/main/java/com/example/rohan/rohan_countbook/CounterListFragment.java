@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -111,9 +112,8 @@ public class CounterListFragment extends Fragment {
             counterHolder.onBind(mCounterStorage.getCounters().get(index), index);
         }
 
-        private void updateUI (int index) {
-            mCounterAdapter.notifyItemChanged(index);
-            mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
+        private void updateUI () {
+            mCounterAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -127,8 +127,8 @@ public class CounterListFragment extends Fragment {
             public TextView mName;
             public TextView mCurrentValue;
             public TextView mDate;
-            public ImageButton mIncrement;
-            public ImageButton mDecrement;
+            public Button mIncrement;
+            public Button mDecrement;
 
             public CounterHolder(View itemView) {
 
@@ -137,8 +137,8 @@ public class CounterListFragment extends Fragment {
                 this.mName = (TextView) itemView.findViewById(R.id.name);
                 this.mCurrentValue = (TextView) itemView.findViewById(R.id.currentValue);
                 this.mDate = (TextView) itemView.findViewById(R.id.currentDateStamp);
-                this.mIncrement = (ImageButton) itemView.findViewById(R.id.incrementCounter);
-                this.mDecrement = (ImageButton) itemView.findViewById(R.id.decrementCounter);
+                this.mIncrement = (Button) itemView.findViewById(R.id.incrementCounter);
+                this.mDecrement = (Button) itemView.findViewById(R.id.decrementCounter);
             }
 
             public void onBind(final Counter counter, final int index) {
@@ -150,7 +150,7 @@ public class CounterListFragment extends Fragment {
                     public void onClick(View view) {
                         counter.incrementValue();
                         mCounterStorage.saveCounters(getActivity());
-                        updateUI(index);
+                        updateUI();
                     }
                 });
                 mDecrement.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +158,7 @@ public class CounterListFragment extends Fragment {
                     public void onClick(View view) {
                         counter.decrementValue();
                         mCounterStorage.saveCounters(getActivity());
-                        updateUI(index);
+                        updateUI();
                     }
                 });
                 itemView.setOnClickListener(new View.OnClickListener() {

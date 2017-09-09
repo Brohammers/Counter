@@ -41,7 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:enabled="false"
             android:hint="@string/initial_value"
             android:inputType="number"
             tools:text="52"/>
@@ -63,7 +62,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:enabled="false"
             android:hint="@string/current_value"
             android:inputType="number"
             tools:text="50"/>
@@ -97,18 +95,18 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:paddingTop="4dp"
             android:layout_height="wrap_content"
-            android:text="@string/description"/>
+            android:paddingTop="4dp"
+            android:text="@string/comment"/>
 
         <EditText
             android:id="@+id/editTextDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minLines="5"
+            android:hint="@string/comment"
+            android:inputType="textMultiLine"
             android:lines="10"
-            android:hint="@string/description"
-            android:inputType="textMultiLine"/>
+            android:minLines="5"/>
 
     </LinearLayout>
 
@@ -130,7 +128,6 @@
             android:id="@+id/Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="false"
             android:text="@string/save"/>
     </LinearLayout>
 
