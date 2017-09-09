@@ -32,7 +32,6 @@ public class CounterListFragment extends Fragment {
     }
 
     private TextView mCounterSummary;
-
     private RecyclerView mRecyclerView;
     private CounterAdapter mCounterAdapter;
     private CounterStorage mCounterStorage;
@@ -43,22 +42,28 @@ public class CounterListFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        try {
+            mCallback = (OnSelectedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getActivity().toString()
+                    + " must implement OnSelectedListener interface!");
+        }
+        mCounterStorage = CounterStorage.getCounterStorage();
+    }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.counter_list, container, false);
         setHasOptionsMenu(true);
-
-
-        mCounterStorage = CounterStorage.getCounterStorage();
-
 
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         mCounterAdapter = new CounterAdapter(mCounterStorage);
         mRecyclerView.setAdapter(mCounterAdapter);
-
 
         mCounterSummary = (TextView) v.findViewById(R.id.numberOfCounters);
         mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
@@ -69,8 +74,8 @@ public class CounterListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu);
+
         super.onCreateOptionsMenu(menu, menuInflater);
     }
 
@@ -81,25 +86,10 @@ public class CounterListFragment extends Fragment {
             case R.id.addCounter:
                 mCallback.onAddSelected();
                 return true;
-
             default:
-                // default behaviour calls superclass
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mCallback = (OnSelectedListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement interface(s)!");
-        }
-    }
-
-
 
     public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterHolder> {
 
@@ -116,50 +106,15 @@ public class CounterListFragment extends Fragment {
             return counterHolder;
         }
 
-
         @Override
-        public void onBindViewHolder(CounterHolder counterHolder, int index) {
-            final Counter counter = mCounterStorage.getCounters().get(index);
-            final int INDEX = index;
-
-            counterHolder.mName.setText(counter.getName());
-            Integer i = counter.getCurrentValue();
-            counterHolder.mCurrentValue.setText(i.toString());
-            counterHolder.mDate.setText(counter.getLastModifiedDate());
-            counterHolder.mDescription.setText(counter.getComment());
-
-            counterHolder.mIncrement.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    counter.setCurrentValue(counter.getCurrentValue() + 1);
-                    updateUI(INDEX);
-                    mCounterStorage.saveCounters(getActivity());
-                }
-            });
-
-            counterHolder.mDecrement.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    counter.setCurrentValue(counter.getCurrentValue() - 1);
-                    updateUI(INDEX);
-                    mCounterStorage.saveCounters(getActivity());
-                }
-            });
-
-            counterHolder.mDescription.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mCallback.onCounterSelected(INDEX);
-                }
-            });
+        public void onBindViewHolder(CounterHolder counterHolder, final int index) {
+            counterHolder.onBind(mCounterStorage.getCounters().get(index), index);
         }
 
         private void updateUI (int index) {
             mCounterAdapter.notifyItemChanged(index);
             mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
         }
-
-
 
         @Override
         public int getItemCount() {
@@ -172,21 +127,46 @@ public class CounterListFragment extends Fragment {
             public TextView mName;
             public TextView mCurrentValue;
             public TextView mDate;
-            public TextView mDescription;
-
             public ImageButton mIncrement;
             public ImageButton mDecrement;
 
-            public CounterHolder(View view) {
+            public CounterHolder(View itemView) {
 
-                super(view);
+                super(itemView);
 
-                this.mName = (TextView) view.findViewById(R.id.name);
-                this.mCurrentValue = (TextView) view.findViewById(R.id.currentValue);
-                this.mDate = (TextView) view.findViewById(R.id.currentDateStamp);
-                this.mDescription = (TextView) view.findViewById(R.id.Description);
-                this.mIncrement = (ImageButton) view.findViewById(R.id.incrementCounter);
-                this.mDecrement = (ImageButton) view.findViewById(R.id.decrementCounter);
+                this.mName = (TextView) itemView.findViewById(R.id.name);
+                this.mCurrentValue = (TextView) itemView.findViewById(R.id.currentValue);
+                this.mDate = (TextView) itemView.findViewById(R.id.currentDateStamp);
+                this.mIncrement = (ImageButton) itemView.findViewById(R.id.incrementCounter);
+                this.mDecrement = (ImageButton) itemView.findViewById(R.id.decrementCounter);
+            }
+
+            public void onBind(final Counter counter, final int index) {
+                mName.setText(counter.getName());
+                mCurrentValue.setText(Integer.toString(counter.getCurrentValue()));
+                mDate.setText(counter.getLastModifiedDate());
+                mIncrement.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        counter.incrementValue();
+                        mCounterStorage.saveCounters(getActivity());
+                        updateUI(index);
+                    }
+                });
+                mDecrement.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        counter.decrementValue();
+                        mCounterStorage.saveCounters(getActivity());
+                        updateUI(index);
+                    }
+                });
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mCallback.onCounterSelected(index);
+                    }
+                });
             }
         }
     }

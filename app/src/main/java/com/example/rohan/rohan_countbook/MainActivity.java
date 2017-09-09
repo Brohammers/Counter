@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
 
     private void setToolbar() {
         Toolbar t = (Toolbar) findViewById(R.id.my_toolbar);
+        t.setTitleTextColor(getResources().getColor(R.color.colorWhite));
         setSupportActionBar(t);
     }
 

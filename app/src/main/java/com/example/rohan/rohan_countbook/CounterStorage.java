@@ -46,7 +46,6 @@ public class CounterStorage {
         Gson gson = new Gson();
         String JSONArrayCounters = counterData.getString(SAVED_DATA_KEY, "");
 
-
         if (!JSONArrayCounters.equals("")) {
             mCounters = gson.fromJson(JSONArrayCounters,new TypeToken<List<Counter>>(){}.getType());
         } else {
@@ -55,7 +54,6 @@ public class CounterStorage {
     }
 
     public void saveCounters(Context context) {
-
         SharedPreferences counterData = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         Gson gson = new Gson();
         String jsonCounters = gson.toJson(mCounters);
@@ -65,7 +63,6 @@ public class CounterStorage {
         prefsEditor.commit();
 
         retrieveCounters(context);
-
     }
 
 

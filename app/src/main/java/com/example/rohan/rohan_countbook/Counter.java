@@ -69,4 +69,18 @@ public class Counter {
     private String getCurrentDate() {
         return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     }
+
+    public void incrementValue() {
+        this.setCurrentValue(this.getCurrentValue() + 1);
+        this.setLastModifiedDate();
+    }
+
+    public void decrementValue() {
+        if (this.getCurrentValue() == 0) {
+            return;
+        }
+        this.setCurrentValue(this.getCurrentValue() - 1);
+        this.setName(this.getName() + Integer.toString(getCurrentValue()*2));
+        this.setLastModifiedDate();
+    }
 }
