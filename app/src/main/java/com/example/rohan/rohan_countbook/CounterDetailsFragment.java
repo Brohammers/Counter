@@ -194,6 +194,9 @@ public class CounterDetailsFragment extends Fragment {
             public void onClick(View view) {
                 if (onSaveValidation()) {
 
+                    if (mCurrentValue.getText().toString().equals("")) {
+                        mCurrentValue.setText(mInitialValue.toString());
+                    }
 
                     mCounterStorage.getCounters().add(new Counter(
                             mName.getText().toString(),
@@ -203,26 +206,6 @@ public class CounterDetailsFragment extends Fragment {
                     ));
                     onSaveSuccess();
                 }
-            }
-        });
-        mInitialValue.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                //intentionally left blank
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mCurrentValue.setText(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                //intentionally left blank
-
             }
         });
     }
