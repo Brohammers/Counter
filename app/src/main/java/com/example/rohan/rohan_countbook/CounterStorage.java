@@ -11,7 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by rohan on 9/7/2017.
+ * Created by Rohan on 9/7/2017.
+ * Purpose: This is the CounterStorage class and is the central storage point for counters.
+ *          This fragment serves three distinct purposes:
+ *          1. Save existing counter data to disk
+ *          2. Retrieve counter data (if present) from disk.
+ *          3. Provide a list of all counters to the rest of the application.
+ *
+ *  Design Rationale: This class was created to have a centralized load/store (storage) mechanism.
+ *                      If the storage details are changed, only this class should be affected. Prevents
+ *                      code duplication as both CounterDetailsFragment and CounterListFragment
+ *                      retrieve, modify and save the counter data.
+ *  Notes. 1. This class uses the Java Singleton pattern and only instantiates ONE instance of its type.
+ *              As such, only the main activity instantiates the instance (and holds a reference to it for GC purposes).
+ *
  */
 
 public class CounterStorage {
@@ -49,8 +62,6 @@ public class CounterStorage {
 
         if (!JSONArrayCounters.equals("")) {
             mCounters = gson.fromJson(JSONArrayCounters,new TypeToken<List<Counter>>(){}.getType());
-        } else {
-            mCounters = new ArrayList<Counter>();
         }
     }
 

@@ -21,11 +21,34 @@ import java.util.List;
 
 /**
  * Created by Rohan on 9/6/2017.
+ * Purpose: This is the list fragment and is the initial fragment displayed on screen.
+ *          This fragment serves three distinct purposes:
+ *          1. Provide Summary information about the counters (i.e. total number of counters)
+ *          2. Show a list of all counters currently in the system
+ *          3. Add a new counter
+ *
+ *  Design Rationale: This list fragment is largely independent of the activity hosting it. However,
+ *                      it expects the activity to have implemented the callback listeners, and
+ *                      initialized the counter storage class. Having said that, this fragment is still
+ *                      highly customizable barring the aforementioned constraints. For example, the
+ *                      information displayed on the list or summary can be changed without affecting
+ *                      the main activity or details fragment.
+ *
+ *                    This fragment uses a RecyclerView (see note 1) instead of a list view, as the former
+ *                    is recommended by Google for displaying longer lists as it is more memory efficient.
+ *                    As such, a counter app can have lots and lots of counters, hence the RecyclerView was chosen.
+ *
+ *   Notes: 1. This class makes use of RecyclerView - a view provided by Google and documentation is
+ *              here: https://developer.android.com/reference/android/support/v7/widget/RecyclerView.html
+ *              Further, a brief tutorial was followed by me in understanding the view here
+ *              (DISCLAIMER: This tutorial was followed prior to taking this course):
+ *              https://developer.android.com/training/material/lists-cards.html
+ *              This view is present in the android support library.
  */
 
 public class CounterListFragment extends Fragment {
 
-    OnSelectedListener mCallback;
+    private OnSelectedListener mCallback;
 
     public interface OnSelectedListener {
 
@@ -43,7 +66,6 @@ public class CounterListFragment extends Fragment {
         return new CounterListFragment();
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +77,6 @@ public class CounterListFragment extends Fragment {
         }
         mCounterStorage = CounterStorage.getCounterStorage();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,7 +94,6 @@ public class CounterListFragment extends Fragment {
 
         return v;
     }
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
@@ -121,7 +141,6 @@ public class CounterListFragment extends Fragment {
         public int getItemCount() {
             return mCounterStorage.getCounters().size();
         }
-
 
         public class CounterHolder extends RecyclerView.ViewHolder {
 

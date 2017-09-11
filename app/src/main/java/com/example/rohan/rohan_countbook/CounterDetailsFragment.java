@@ -25,6 +25,25 @@ import java.util.List;
 
 /**
  * Created by Rohan on 9/6/2017.
+ * Purpose: This is the details fragment and is used to show the details of a particular counter
+ *          This fragment serves three distinct purposes:
+ *          1. Provide complete information about the counter: Name, Initial Value, Current Value,
+ *              Date, Comments
+ *          2. Freely edit the aforementioned information (except Date)
+ *          3. Delete an existing counter
+ *
+ *  Design Rationale: This details fragment is largely independent of the activity hosting it. However,
+ *                      it expects the activity to have implemented the callback listeners, and
+ *                      initialized the counter storage class. Having said that, this fragment is still
+ *                      highly customizable barring the aforementioned constraints. For example, the
+ *                      information displayed on the details can be changed without affecting
+ *                      the main activity or list fragment.
+ *
+ *   Notes: 1. This fragment has two mechanisms of creating - a static newInstance(int index) method,
+ *              and the default CounterDetailsFragment() constructor. THe static method is used for passing the
+ *              index of a counter so the details of the counter can be stored. THe default constructor is used
+ *              for creating a new counter.
+ *
  */
 
 public class CounterDetailsFragment extends Fragment {

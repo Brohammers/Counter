@@ -5,6 +5,10 @@ import java.util.Date;
 
 /**
  * Created by Rohan on 9/6/2017.
+ * Purpose: This is the Counter class and is used for modelling the state and behaviour of a given
+ *          counter.
+ *
+ * Design Rationale: This class was created to define exactly what it means to be a counter.
  */
 
 public class Counter {
