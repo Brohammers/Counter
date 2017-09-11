@@ -1,6 +1,7 @@
 package com.example.rohan.rohan_countbook;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -75,9 +77,8 @@ public class CounterListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        menuInflater.inflate(R.menu.menu_main, menu);
-
         super.onCreateOptionsMenu(menu, menuInflater);
+        menuInflater.inflate(R.menu.menu_main, menu);
     }
 
     @Override
@@ -92,11 +93,11 @@ public class CounterListFragment extends Fragment {
         }
     }
 
-    public class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterHolder> {
+    private class CounterAdapter extends RecyclerView.Adapter<CounterAdapter.CounterHolder> {
 
         private CounterStorage mCounterStorage;
 
-        public CounterAdapter(CounterStorage counterStorage) {
+        private CounterAdapter(CounterStorage counterStorage) {
             this.mCounterStorage = counterStorage;
         }
 
@@ -124,13 +125,13 @@ public class CounterListFragment extends Fragment {
 
         public class CounterHolder extends RecyclerView.ViewHolder {
 
-            public TextView mName;
-            public TextView mCurrentValue;
-            public TextView mDate;
-            public Button mIncrement;
-            public Button mDecrement;
+            private TextView mName;
+            private TextView mCurrentValue;
+            private TextView mDate;
+            private Button mIncrement;
+            private Button mDecrement;
 
-            public CounterHolder(View itemView) {
+            private CounterHolder(View itemView) {
 
                 super(itemView);
 
@@ -141,7 +142,7 @@ public class CounterListFragment extends Fragment {
                 this.mDecrement = (Button) itemView.findViewById(R.id.decrementCounter);
             }
 
-            public void onBind(final Counter counter, final int index) {
+            private void onBind(final Counter counter, final int index) {
                 mName.setText(counter.getName());
                 mCurrentValue.setText(Integer.toString(counter.getCurrentValue()));
                 mDate.setText(counter.getLastModifiedDate());
@@ -151,14 +152,17 @@ public class CounterListFragment extends Fragment {
                         counter.incrementValue();
                         mCounterStorage.saveCounters(getActivity());
                         updateUI();
+
                     }
                 });
                 mDecrement.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        counter.decrementValue();
-                        mCounterStorage.saveCounters(getActivity());
-                        updateUI();
+                        if (counterValidation(counter)) {
+                            counter.decrementValue();
+                            mCounterStorage.saveCounters(getActivity());
+                            updateUI();
+                        }
                     }
                 });
                 itemView.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +171,15 @@ public class CounterListFragment extends Fragment {
                         mCallback.onCounterSelected(index);
                     }
                 });
+            }
+
+            private boolean counterValidation(Counter counter) {
+                if (counter.getCurrentValue() > 0) {
+                    return true;
+                } else {
+                    Toast.makeText(getActivity(), "Cannot decrement counter below 0!", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
             }
         }
     }

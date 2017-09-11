@@ -73,9 +73,6 @@ public class Counter {
     }
 
     public void decrementValue() {
-        if (this.getCurrentValue() == 0) {
-            return;
-        }
         this.setCurrentValue(this.getCurrentValue() - 1);
         this.setLastModifiedDate();
     }

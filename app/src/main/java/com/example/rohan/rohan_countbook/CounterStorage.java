@@ -19,6 +19,7 @@ public class CounterStorage {
     private List<Counter> mCounters;
     private static final String SAVED_DATA_KEY = "com.example.rohan.rohan_book.CounterStorage";
     private static CounterStorage mCounterStorage = null;
+
     public static CounterStorage getCounterStorage() {
 
         if (mCounterStorage == null) {

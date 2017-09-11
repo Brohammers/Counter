@@ -129,23 +129,6 @@ public class CounterDetailsFragment extends Fragment {
             initNewCounter(v);
         }
 
-        mInitialValue.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                mCurrentValue.setText(charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
         return v;
     }
 
@@ -171,7 +154,6 @@ public class CounterDetailsFragment extends Fragment {
                     mCounterStorage.getCounters().get(mIndex).setInitialValue(Integer.valueOf(mInitialValue.getText().toString()));
                     mCounterStorage.getCounters().get(mIndex).setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
                     mCounterStorage.getCounters().get(mIndex).setComment(mDescription.getText().toString());
-
                     onSaveSuccess();
                 }
             }
@@ -188,18 +170,18 @@ public class CounterDetailsFragment extends Fragment {
 
     private void initNewCounter(View v) {
         mDate.setText("Will be set to today's date on save.");
-
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (onSaveValidation()) {
+
+
                     mCounterStorage.getCounters().add(new Counter(
                             mName.getText().toString(),
                             mDescription.getText().toString(),
                             Integer.valueOf(mInitialValue.getText().toString()),
                             Integer.valueOf(mCurrentValue.getText().toString())
                     ));
-
                     onSaveSuccess();
                 }
             }
