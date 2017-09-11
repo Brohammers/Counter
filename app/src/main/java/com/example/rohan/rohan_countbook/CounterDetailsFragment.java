@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -193,11 +196,9 @@ public class CounterDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (onSaveValidation()) {
-
                     if (mCurrentValue.getText().toString().equals("")) {
-                        mCurrentValue.setText(mInitialValue.toString());
+                        mCurrentValue.setText(mInitialValue.getText().toString());
                     }
-
                     mCounterStorage.getCounters().add(new Counter(
                             mName.getText().toString(),
                             mDescription.getText().toString(),
