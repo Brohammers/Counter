@@ -54,7 +54,6 @@ public class CounterDetailsFragment extends Fragment {
     private static final String IS_VALID_KEY = "com.example.rohan.rohan_countBook.CounterDetailsFragment.IS_VALID_KEY";
     private static final String INDEX_KEY = "com.example.rohan.rohan_countBook.CounterDetailsFragment.INDEX_KEY";
 
-
     private int mIndex;
     private boolean mIsNew;
 
