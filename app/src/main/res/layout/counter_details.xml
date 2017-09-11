@@ -64,7 +64,6 @@
             android:layout_weight="2"
             android:hint="@string/current_value"
             android:inputType="number"
-            android:text="@string/_0"
             tools:text="50"/>
 
     </LinearLayout>

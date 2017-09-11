@@ -205,6 +205,26 @@ public class CounterDetailsFragment extends Fragment {
                 }
             }
         });
+        mInitialValue.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                //intentionally left blank
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                mCurrentValue.setText(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                //intentionally left blank
+
+            }
+        });
     }
 
     private boolean onSaveValidation() {
