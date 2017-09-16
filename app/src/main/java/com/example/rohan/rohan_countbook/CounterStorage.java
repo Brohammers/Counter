@@ -47,10 +47,6 @@ public class CounterStorage {
        initCounters();
     }
 
-    private List<Counter> getCounters() {
-        return mCounters;
-    }
-
     public int getNumberOfCounters() {
         return this.getCounters().size();
     }
@@ -59,16 +55,12 @@ public class CounterStorage {
         return this.getCounters().get(index);
     }
 
-    public void addCounter(Counter m) {
-        this.getCounters().add(m);
+    public void addCounter(Counter counter) {
+        this.getCounters().add(counter);
     }
 
     public void removeCounter(int index) {
         this.getCounters().remove(index);
-    }
-
-    public void initCounters() {
-        mCounters = new ArrayList<Counter>();
     }
 
     public void retrieveCounters(Context context) {
@@ -91,6 +83,14 @@ public class CounterStorage {
         prefsEditor.apply();
 
         retrieveCounters(context);
+    }
+
+    private List<Counter> getCounters() {
+        return mCounters;
+    }
+
+    private void initCounters() {
+        mCounters = new ArrayList<Counter>();
     }
 
 

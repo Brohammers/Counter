@@ -22,7 +22,7 @@ public class Counter {
     public Counter(String name, String comment, int initialValue, int currentValue) {
         this.mName = name;
         this.mComment = comment;
-        this.mLastModifiedDate = getCurrentDate();
+        setLastModifiedDate();
         this.mInitialValue = initialValue;
         this.mCurrentValue = currentValue;
     }
@@ -31,16 +31,16 @@ public class Counter {
         return mName;
     }
 
-    public void setName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        this.mName = name;
     }
 
     public String getComment() {
         return mComment;
     }
 
-    public void setComment(String mComment) {
-        this.mComment = mComment;
+    public void setComment(String comment) {
+        this.mComment = comment;
     }
 
     public String getLastModifiedDate() {
@@ -55,20 +55,16 @@ public class Counter {
         return mInitialValue;
     }
 
-    public void setInitialValue(int mInitialValue) {
-        this.mInitialValue = mInitialValue;
+    public void setInitialValue(int initialValue) {
+        this.mInitialValue = initialValue;
     }
 
     public int getCurrentValue() {
         return mCurrentValue;
     }
 
-    public void setCurrentValue(int mCurrentValue) {
-        this.mCurrentValue = mCurrentValue;
-    }
-
-    private String getCurrentDate() {
-        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+    public void setCurrentValue(int currentValue) {
+        this.mCurrentValue = currentValue;
     }
 
     public void incrementValue() {
@@ -79,5 +75,9 @@ public class Counter {
     public void decrementValue() {
         this.setCurrentValue(this.getCurrentValue() - 1);
         this.setLastModifiedDate();
+    }
+
+    private String getCurrentDate() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
     }
 }
