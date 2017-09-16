@@ -90,7 +90,7 @@ public class CounterListFragment extends Fragment {
         mRecyclerView.setAdapter(mCounterAdapter);
 
         mCounterSummary = (TextView) v.findViewById(R.id.numberOfCounters);
-        mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getCounters().size()));
+        mCounterSummary.setText("Total number of counters: " + Integer.toString(mCounterStorage.getNumberOfCounters()));
 
         return v;
     }
@@ -130,7 +130,7 @@ public class CounterListFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(CounterHolder counterHolder, final int index) {
-            counterHolder.onBind(mCounterStorage.getCounters().get(index), index);
+            counterHolder.onBind(mCounterStorage.getCounter(index), index);
         }
 
         private void updateUI () {
@@ -139,7 +139,7 @@ public class CounterListFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return mCounterStorage.getCounters().size();
+            return mCounterStorage.getNumberOfCounters();
         }
 
         public class CounterHolder extends RecyclerView.ViewHolder {

@@ -91,7 +91,15 @@ public class MainActivity extends AppCompatActivity implements CounterListFragme
     }
 
     @Override
-    public void onCounterModified() {
+    public void onCounterSavedOrDeleted() {
         initializeCounterList();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+            finish();
+        }
+        super.onBackPressed();
     }
 }

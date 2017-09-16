@@ -72,7 +72,7 @@ public class CounterDetailsFragment extends Fragment {
     OnCounterModifiedListener mCallback;
 
     public interface OnCounterModifiedListener {
-        void onCounterModified();
+        void onCounterSavedOrDeleted();
     }
 
     @Override
@@ -100,9 +100,9 @@ public class CounterDetailsFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.deleteCounter:
                 if (!mIsNew) {
-                    mCounterStorage.getCounters().remove(mIndex);
+                    mCounterStorage.removeCounter(mIndex);
                     mCounterStorage.saveCounters(getActivity());
-                    mCallback.onCounterModified();
+                    mCallback.onCounterSavedOrDeleted();
                     Toast.makeText(getActivity(), "Counter deleted!", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "You are currently in the create new counter form!", Toast.LENGTH_SHORT).show();
@@ -154,7 +154,7 @@ public class CounterDetailsFragment extends Fragment {
     }
 
     private void initExistingCounter(View v) {
-        mCounter = mCounterStorage.getCounters().get(mIndex);
+        mCounter = mCounterStorage.getCounter(mIndex);
 
         loadCounterDetails();
 
@@ -171,10 +171,10 @@ public class CounterDetailsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (onSaveValidation()) {
-                    mCounterStorage.getCounters().get(mIndex).setName(mName.getText().toString());
-                    mCounterStorage.getCounters().get(mIndex).setInitialValue(Integer.valueOf(mInitialValue.getText().toString()));
-                    mCounterStorage.getCounters().get(mIndex).setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
-                    mCounterStorage.getCounters().get(mIndex).setComment(mDescription.getText().toString());
+                    mCounter.setName(mName.getText().toString());
+                    mCounter.setInitialValue(Integer.valueOf(mInitialValue.getText().toString()));
+                    mCounter.setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
+                    mCounter.setComment(mDescription.getText().toString());
                     onSaveSuccess();
                 }
             }
@@ -198,7 +198,7 @@ public class CounterDetailsFragment extends Fragment {
                     if (mCurrentValue.getText().toString().equals("")) {
                         mCurrentValue.setText(mInitialValue.getText().toString());
                     }
-                    mCounterStorage.getCounters().add(new Counter(
+                    mCounterStorage.addCounter(new Counter(
                             mName.getText().toString(),
                             mDescription.getText().toString(),
                             Integer.valueOf(mInitialValue.getText().toString()),
@@ -233,7 +233,7 @@ public class CounterDetailsFragment extends Fragment {
     private void onSaveSuccess() {
         mCounterStorage.saveCounters(getActivity());
         Toast.makeText(getActivity(), "Counter successfully saved!", Toast.LENGTH_SHORT).show();
-        mCallback.onCounterModified();
+        mCallback.onCounterSavedOrDeleted();
     }
 
 }

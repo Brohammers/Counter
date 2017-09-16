@@ -16,7 +16,7 @@ import java.util.List;
  *          This fragment serves three distinct purposes:
  *          1. Save existing counter data to disk
  *          2. Retrieve counter data (if present) from disk.
- *          3. Provide a list of all counters to the rest of the application.
+ *          3. Provide methods to get, add and remove counters stored within the app
  *
  *  Design Rationale: This class was created to have a centralized load/store (storage) mechanism.
  *                      If the storage details are changed, only this class should be affected. Prevents
@@ -47,8 +47,24 @@ public class CounterStorage {
        initCounters();
     }
 
-    public List<Counter> getCounters() {
+    private List<Counter> getCounters() {
         return mCounters;
+    }
+
+    public int getNumberOfCounters() {
+        return this.getCounters().size();
+    }
+
+    public Counter getCounter(int index) {
+        return this.getCounters().get(index);
+    }
+
+    public void addCounter(Counter m) {
+        this.getCounters().add(m);
+    }
+
+    public void removeCounter(int index) {
+        this.getCounters().remove(index);
     }
 
     public void initCounters() {
@@ -72,7 +88,7 @@ public class CounterStorage {
 
         SharedPreferences.Editor prefsEditor = counterData.edit();
         prefsEditor.putString(SAVED_DATA_KEY, jsonCounters);
-        prefsEditor.commit();
+        prefsEditor.apply();
 
         retrieveCounters(context);
     }
