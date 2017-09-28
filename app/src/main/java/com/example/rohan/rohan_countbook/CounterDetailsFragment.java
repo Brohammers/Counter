@@ -172,7 +172,9 @@ public class CounterDetailsFragment extends Fragment {
                 if (onSaveValidation()) {
                     mCounter.setName(mName.getText().toString());
                     mCounter.setInitialValue(Integer.valueOf(mInitialValue.getText().toString()));
-                    mCounter.setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
+                    if (mCounter.getCurrentValue() != Integer.valueOf(mCurrentValue.getText().toString())) {
+                        mCounter.setCurrentValue(Integer.valueOf(mCurrentValue.getText().toString()));
+                    }
                     mCounter.setComment(mDescription.getText().toString());
                     onSaveSuccess();
                 }

@@ -65,6 +65,7 @@ public class Counter {
 
     public void setCurrentValue(int currentValue) {
         this.mCurrentValue = currentValue;
+        this.setLastModifiedDate();
     }
 
     public void incrementValue() {
