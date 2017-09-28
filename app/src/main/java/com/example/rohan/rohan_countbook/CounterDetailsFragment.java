@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.text.TextUtilsCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -84,7 +85,6 @@ public class CounterDetailsFragment extends Fragment {
             throw new ClassCastException(getActivity().toString()
                     + " must implement OnCounterModifiedListener");
         }
-
     }
 
     @Override
@@ -105,9 +105,8 @@ public class CounterDetailsFragment extends Fragment {
                     mCallback.onCounterSavedOrDeleted();
                     Toast.makeText(getActivity(), "Counter deleted!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getActivity(), "You are currently in the create new counter form!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "You cannot delete this counter has not been created yet", Toast.LENGTH_SHORT).show();
                 }
-
             default:
                 // default behaviour calls superclass
                 return super.onOptionsItemSelected(item);
