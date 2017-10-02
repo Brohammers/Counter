@@ -1,0 +1,4 @@
+#Mon Sep 11 16:13:10 MDT 2017
+base.0=F\:\\CMPUT301_Assignment_1\\rohan-CountBook\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_2
+renamed.0=classes.dex
+file.0=F\:\\CMPUT301_Assignment_1\\rohan-CountBook\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_2\\classes.dex
