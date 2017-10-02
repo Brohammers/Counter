@@ -1,80 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="arm64-v8a,armeabi-v7a,armeabi"
-    api-level="26"
-    build-mode="COLD"
+    abi="x86"
+    api-level="25"
+    build-mode="FULL"
     density="560dpi"
     format="10"
     plugin-version="2.3.3"
-    timestamp="1506633177175"
-    token="-1081698543808910465"
-    verifier="COLD_SWAP_REQUESTED" >
+    timestamp="1506914096008"
+    token="870404665340016457"
+    verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="786" />
+        duration="728" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="8" />
+        duration="509" />
     <task
         name="verifier"
-        duration="6" />
+        duration="194" />
 
     <artifact
-        location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
         type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
+        type="SPLIT" />
+    <artifact
+        location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\outputs\apk\app-debug.apk"
+        type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1506633027069"
+        timestamp="1506914096008"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
             type="SPLIT" />
         <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\outputs\apk\app-debug.apk"
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
+            type="SPLIT" />
+        <artifact
+            location="C:\Users\rohan\Documents\GitHub\rohan-CountBook\app\build\outputs\apk\app-debug.apk"
             type="SPLIT_MAIN" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_1.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_6.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_7.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_5.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_3.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_2.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_4.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_9.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\dep\dependencies.apk"
-            type="SPLIT" />
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_8.apk"
-            type="SPLIT" />
-    </build>
-    <build
-        build-mode="COLD"
-        timestamp="1506633177175"
-        verifier="COLD_SWAP_REQUESTED" >
-        <artifact
-            location="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\split-apk\debug\slices\slice_0.apk"
-            type="SPLIT" />
     </build>
 
 </instant-run>
