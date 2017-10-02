@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\rohan\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.7\751f548c85fa49f330cecbb1875893f971b33c4e\gson-2.7.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\transforms\dex\debug\folders\1000\10\gson-2.7_82098932a5e40b85a14717a2f9a296a427556ef4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="07f4b471b87437f8bd4df911d7cfda7cb501a45a">
+        <dex dex="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_5add78857b8bc702a697c478338f27b4c9c07330\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="26.0.1"
+        sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
+        <dex dex="F:\CMPUT301_Assignment_1\rohan-CountBook\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_3a075a3b89762e82d4f35277314b1917361fc6fa\classes.dex" />
+    </item>
+
+</items>
